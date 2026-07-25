@@ -1,32 +1,21 @@
-# React + TypeScript + Vite
+# 🌤️ Weather Radar - Clima Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Dashboard moderno de previsão do tempo desenvolvido em **React**, **TypeScript**, **Sass** e empacotado com **Vite**. O projeto realiza consultas em tempo real em APIs RESTful e conta com cobertura de testes automatizados com **Vitest**.
 
-Currently, two official plugins are available:
+## 🛠️ Tecnologias e Conceitos Aplicados
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React (Hooks & Estado):** Gerenciamento dinâmico de busca, loading e renderização.
+- **TypeScript:** Tipagem estrita de dados (`WeatherData`) garantindo consistência no fluxo da aplicação.
+- **Sass (SCSS):** Estilização avançada com variáveis, nesting e layouts totalmente responsivos.
+- **Consumo de API RESTful:** Integração assíncrona com a API da Open-Meteo via `async/await`.
+- **Testes Unitários:** Cobertura de componentes essenciais utilizando `Vitest` e `React Testing Library`.
 
-## React Compiler
+## 🔄 Resolução de Código Legado e Refatoração
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O projeto possuía um módulo legado (`src/legacy/weatherServiceOld.js`) estruturado em JavaScript antigo (ES5), que utilizava `XMLHttpRequest` e padrões de _callback_ para gerenciar requisições de rede.
 
-## Expanding the Oxlint configuration
+**Ações de melhoria tomadas:**
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+1. Identificação de débitos técnicos no tratamento de assincronismo antigo.
+2. Refatoração completa da lógica de comunicação com o servidor substituindo por `Fetch API` integrada a estruturas modernas de `async/await` e tratamento de exceções robusto com `try/catch`.
+3. Migração para o ecossistema do **TypeScript**, prevenindo erros de tipagem em tempo de execução no componente principal (`App.tsx`).
