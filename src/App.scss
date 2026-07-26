@@ -1,76 +1,198 @@
-// Variáveis do Sass (guardam cores e configurações que se repetem)
-$primary-color: #2c3e50;
-$light-bg: #f5f7fa;
-$card-bg: #ffffff;
+// 1. Variáveis de Cores e Configurações (O coração do Sass)
+$bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+$card-bg: rgba(30, 41, 59, 0.7);
+$card-border: rgba(255, 255, 255, 0.1);
+$text-main: #f8fafc;
+$text-muted: #94a3b8;
+$accent-color: #38bdf8;
+$accent-hover: #7dd3fc;
+$error-color: #f87171;
 
+// 2. Estilos Globais
 body {
-  background-color: $light-bg;
-  font-family: "Arial", sans-serif;
   margin: 0;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: $bg-gradient;
+  color: $text-main;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
+// 3. Estrutura do Dashboard (Nesting do Sass)
 .dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 30px;
+  background: $card-bg;
+  backdrop-filter: blur(12px);
+  border: 1px solid $card-border;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 
   header {
     text-align: center;
-    color: $primary-color;
     margin-bottom: 30px;
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #fff, $accent-color);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
+  // Seção de Busca
   .search-section {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 30px;
 
     input {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      width: 100%;
-      max-width: 300px;
+      flex: 1;
+      padding: 14px 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid $card-border;
+      border-radius: 14px;
+      color: $text-main;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: $accent-color;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      }
+
+      &::placeholder {
+        color: $text-muted;
+      }
     }
 
     button {
-      padding: 10px 20px;
-      background-color: $primary-color;
-      color: white;
+      padding: 14px 28px;
+      background: $accent-color;
+      color: #0f172a;
       border: none;
-      border-radius: 4px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
+      transition: all 0.2s ease;
 
       &:hover {
-        // background-color: lighten($primary-color, 10%);
+        background: $accent-hover;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(1px);
       }
     }
   }
 
-  // Grid Responsivo (muda de tamanho sozinho no celular)
+  // Grid de Informações do Clima
   .weather-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      h2 {
+        margin: 0;
+      }
+
+      .country-flag {
+        width: 28px;
+        height: auto;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+      }
+    }
 
     .weather-card {
-      background-color: $card-bg;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid $card-border;
+      border-radius: 18px;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       text-align: center;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
 
       h2,
       h3 {
-        margin-top: 0;
-        color: $primary-color;
+        margin: 0 0 8px 0;
+        font-size: 1.3rem;
+        color: $text-main;
       }
 
-      .temp {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin: 10px 0;
+      h3 {
+        font-size: 1.1rem;
+        color: $accent-color;
+        border-bottom: 1px solid $card-border;
+        padding-bottom: 8px;
+      }
+
+      p {
+        margin: 6px 0;
+        color: $text-muted;
+        font-size: 0.95rem;
+
+        &.temp {
+          font-size: 3rem;
+          font-weight: 800;
+          color: $text-main;
+          margin: 12px 0;
+        }
+
+        .status-badge {
+          margin-top: 15px;
+          padding: 10px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          display: inline-block;
+          width: 90%;
+
+          .condition-tag {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #38bdf8;
+            display: block;
+            margin-bottom: 4px;
+          }
+
+          .status-text {
+            font-size: 0.85rem !important;
+            font-style: italic;
+            color: #94a3b8 !important;
+            margin: 0 !important;
+          }
+        }
       }
     }
   }
