@@ -1,199 +1,171 @@
-// 1. Variáveis de Cores e Configurações (O coração do Sass)
+// =======================
+// Variáveis
+// =======================
+
 $bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
 $card-bg: rgba(30, 41, 59, 0.7);
 $card-border: rgba(255, 255, 255, 0.1);
+
 $text-main: #f8fafc;
 $text-muted: #94a3b8;
-$accent-color: #38bdf8;
-$accent-hover: #7dd3fc;
-$error-color: #f87171;
 
-// 2. Estilos Globais
-body {
+$accent: #38bdf8;
+$accent-hover: #7dd3fc;
+
+// =======================
+// Global
+// =======================
+
+* {
   margin: 0;
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif;
-  background: $bg-gradient;
-  color: $text-main;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
   box-sizing: border-box;
 }
 
-// 3. Estrutura do Dashboard (Nesting do Sass)
+body {
+  font-family: "Inter", system-ui, sans-serif;
+
+  background: $bg-gradient;
+  color: $text-main;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// =======================
+// Dashboard
+// =======================
+
 .dashboard-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
+  width: min(1000px, 95%);
   padding: 30px;
+
   background: $card-bg;
-  backdrop-filter: blur(12px);
   border: 1px solid $card-border;
   border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
 
-  header {
-    text-align: center;
-    margin-bottom: 30px;
+  backdrop-filter: blur(12px);
+}
 
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(to right, #fff, $accent-color);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-  // Seção de Busca
-  .search-section {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 30px;
+header h1 {
+  font-size: 2.3rem;
+}
 
-    input {
-      flex: 1;
-      padding: 14px 20px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid $card-border;
-      border-radius: 14px;
-      color: $text-main;
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.3s ease;
+// =======================
+// Busca
+// =======================
 
-      &:focus {
-        border-color: $accent-color;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-      }
+.search-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
 
-      &::placeholder {
-        color: $text-muted;
-      }
-    }
+.search-section input {
+  flex: 1;
+}
 
-    button {
-      padding: 14px 28px;
-      background: $accent-color;
-      color: #0f172a;
-      border: none;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+.search-section input,
+.search-section button {
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+}
 
-      &:hover {
-        background: $accent-hover;
-        transform: translateY(-1px);
-      }
+.search-section button {
+  cursor: pointer;
+  background: $accent;
+  font-weight: bold;
+}
 
-      &:active {
-        transform: translateY(1px);
-      }
-    }
-  }
+.search-section button:hover {
+  background: $accent-hover;
+}
 
-  // Grid de Informações do Clima
+// =======================
+// Grid
+// =======================
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
   .weather-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr;
-    }
-
-    .title-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 8px;
-
-      h2 {
-        margin: 0;
-      }
-
-      .country-flag {
-        width: 28px;
-        height: auto;
-        border-radius: 4px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        display: inline-block;
-      }
-    }
-
-    .weather-card {
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid $card-border;
-      border-radius: 18px;
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s ease;
-
-      &:hover {
-        transform: translateY(-3px);
-      }
-
-      h2,
-      h3 {
-        margin: 0 0 8px 0;
-        font-size: 1.3rem;
-        color: $text-main;
-      }
-
-      h3 {
-        font-size: 1.1rem;
-        color: $accent-color;
-        border-bottom: 1px solid $card-border;
-        padding-bottom: 8px;
-      }
-
-      p {
-        margin: 6px 0;
-        color: $text-muted;
-        font-size: 0.95rem;
-
-        &.temp {
-          font-size: 3rem;
-          font-weight: 800;
-          color: $text-main;
-          margin: 12px 0;
-        }
-
-        .status-badge {
-          margin-top: 15px;
-          padding: 10px;
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 12px;
-          display: inline-block;
-          width: 90%;
-
-          .condition-tag {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #38bdf8;
-            display: block;
-            margin-bottom: 4px;
-          }
-
-          .status-text {
-            font-size: 0.85rem !important;
-            font-style: italic;
-            color: #94a3b8 !important;
-            margin: 0 !important;
-          }
-        }
-      }
-    }
+    grid-template-columns: 1fr;
   }
+}
+
+// =======================
+// Cards
+// =======================
+
+.weather-card {
+  background: rgba(15, 23, 42, 0.5);
+
+  border: 1px solid $card-border;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  text-align: center;
+}
+
+.title-wrapper {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.country-flag {
+  width: 34px;
+}
+
+.temp {
+  font-size: 4rem;
+
+  font-weight: bold;
+
+  margin: 20px 0;
+}
+
+.status-badge {
+  margin-top: 20px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.condition-tag {
+  display: block;
+
+  color: $accent;
+
+  font-weight: bold;
+}
+
+.status-text {
+  margin-top: 6px;
+
+  color: $text-muted;
 }
