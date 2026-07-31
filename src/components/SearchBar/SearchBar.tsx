@@ -9,9 +9,9 @@ export function SearchBar({ city, setCity, onSearch }: SearchBarProps) {
     <section className="search-section">
       <input
         type="text"
+        placeholder="🔍 Pesquise uma cidade..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        placeholder="Digite a cidade ou país..."
       />
 
       <button onClick={onSearch}>Buscar</button>

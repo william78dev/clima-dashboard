@@ -28,16 +28,24 @@ export async function fetchWeather(cityName: string): Promise<WeatherData> {
   } = geoData.results[0];
 
   const weatherResponse = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,is_day,rain,weather_code`,
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,is_day,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`,
   );
 
   const weatherData = await weatherResponse.json();
+
+  const forecast = weatherData.daily.time.map(
+    (date: string, index: number) => ({
+      date,
+      maxTemp: Math.round(weatherData.daily.temperature_2m_max[index]),
+      minTemp: Math.round(weatherData.daily.temperature_2m_min[index]),
+      weatherCode: weatherData.daily.weather_code[index],
+    }),
+  );
 
   const { condition, statusText } = getWeatherInfo(
     weatherData.current.weather_code,
     weatherData.current.is_day,
   );
-
   return {
     name: correctName,
     countryCode: country_code.toLowerCase(),
@@ -46,7 +54,8 @@ export async function fetchWeather(cityName: string): Promise<WeatherData> {
     statusText,
     humidity: weatherData.current.relative_humidity_2m,
     windSpeed: Math.round(weatherData.current.wind_speed_10m),
-    weatherCode: weatherData.current.weather_code,
     feelsLike: Math.round(weatherData.current.apparent_temperature),
+    weatherCode: weatherData.current.weather_code,
+    forecast,
   };
 }

@@ -5,9 +5,10 @@ import type { WeatherData } from "./types/weather";
 import { WeatherCard } from "./components/WeatherCard/WeatherCard";
 import { WeatherDetails } from "./components/WeatherDetails/WeatherDetails";
 import { fetchWeather } from "./services/weatherApi";
+import { ForecastCard } from "./components/ForecastCard/ForecastCard";
 
 export default function App() {
-  const [city, setCity] = useState<string>("São Paulo");
+  const [city, setCity] = useState<string>("");
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,11 +31,24 @@ export default function App() {
   };
 
   useEffect(() => {
-    handleSearch();
+    fetchDefaultCity();
   }, []);
 
+  const fetchDefaultCity = async () => {
+    setLoading(true);
+
+    try {
+      const data = await fetchWeather("São Paulo");
+      setWeather(data);
+    } catch {
+      setError("Erro ao carregar a cidade padrão.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="dashboard-con tainer">
+    <div className="dashboard-container">
       <header>
         <h1>🌤️ Weather Radar</h1>
       </header>
@@ -47,10 +61,16 @@ export default function App() {
       {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
 
       {weather && !loading && (
-        <main className="weather-grid teste-grid">
-          <WeatherCard weather={weather} />
-          <WeatherDetails weather={weather} />
-        </main>
+        <>
+          <main className="weather-grid">
+            <WeatherCard weather={weather} />
+            <WeatherDetails weather={weather} />
+          </main>
+
+          <section className="forecast-section">
+            <ForecastCard forecast={weather.forecast} />
+          </section>
+        </>
       )}
     </div>
   );

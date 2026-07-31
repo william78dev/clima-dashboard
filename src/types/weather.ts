@@ -1,3 +1,10 @@
+export interface ForecastDay {
+  date: string;
+  maxTemp: number;
+  minTemp: number;
+  weatherCode: number;
+}
+
 export interface WeatherData {
   name: string;
   temperature: number;
@@ -8,4 +15,5 @@ export interface WeatherData {
   countryCode: string; // Adicionado para usar na URL da bandeira
   weatherCode: number;
   feelsLike: number;
+  forecast: ForecastDay[]; // Adicionado para armazenar a previsão do tempo
 }
