@@ -54,7 +54,7 @@ header {
   text-align: center;
   margin-bottom: 30px;
 
-  header h1 {
+  h1 {
     font-size: 2.5rem;
   }
 }
@@ -277,5 +277,74 @@ header {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// =======================
+// Responsividade Mobile
+// =======================
+
+@media (max-width: 600px) {
+  body {
+    display: block;
+    padding: 15px;
+    overflow-x: hidden;
+  }
+
+  .dashboard-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .search-section {
+    flex-direction: column;
+
+    input {
+      width: 100%;
+      font-size: 1.1rem;
+
+      &::placeholder {
+        font-size: 1.1rem;
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .weather-card p {
+    font-size: 1.2rem;
+  }
+
+  .temp {
+    font-size: 3.5rem;
+  }
+
+  .forecast-section {
+    width: 100%;
+  }
+
+  .forecast-section .weather-card {
+    width: 100%;
   }
 }
