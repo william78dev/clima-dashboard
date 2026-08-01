@@ -9,7 +9,7 @@ interface WeatherCardProps {
 
 export function WeatherDetails({ weather }: WeatherCardProps) {
   return (
-    <div className="weather-card">
+    <div className="weather-card weather-details">
       <h3>Detalhes</h3>
 
       <p>

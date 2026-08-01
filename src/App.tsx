@@ -50,7 +50,7 @@ export default function App() {
   return (
     <div className="dashboard-container">
       <header>
-        <h1>🌤️ Weather Radar</h1>
+        <h1>🌦️ Clima em Tempo Real</h1>
       </header>
 
       <SearchBar city={city} setCity={setCity} onSearch={handleSearch} />
